@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,27 +20,44 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GetComponent<GameObject>();
+        player = gameObject;
     }
 
     // Update is called once per frame
     void Update()
     {
-        horizontalMove = Input.GetAxisRaw("Horizontal") * playerSpeed;
-
-        if (Input.GetButtonDown("Jump"))
+        if (string.Equals(player.name, "Player1", StringComparison.OrdinalIgnoreCase))
         {
-            jump = true;
+            horizontalMove = Input.GetAxisRaw("Player1_Horizontal") * playerSpeed;
+            if (Input.GetButtonDown("Player1_Jump"))
+            {
+                jump = true;
+            }
+            if (Input.GetButtonDown("Player1_Crouch"))
+            {
+                crouch = true;
+            }
+            else if (Input.GetButtonUp("Player1_Crouch"))
+            {
+                crouch = false;
+            }
         }
-
-        if (Input.GetButtonDown("Crouch"))
+        if (string.Equals(player.name, "Player2", StringComparison.OrdinalIgnoreCase))
         {
-            crouch = true;
-        }
-        else if (Input.GetButtonUp("Crouch"))
-        {
-            crouch = false;
-        }
+            horizontalMove = Input.GetAxisRaw("Player2_Horizontal") * playerSpeed;
+            if (Input.GetButtonDown("Player2_Jump"))
+            {
+                jump = true;
+            }
+            if (Input.GetButtonDown("Player2_Crouch"))
+            {
+                crouch = true;
+            }
+            else if (Input.GetButtonUp("Player2_Crouch"))
+            {
+                crouch = false;
+            }
+        }    
     }
 
     void FixedUpdate()
