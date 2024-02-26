@@ -9,6 +9,8 @@ public class PlayerMovement : MonoBehaviour
 
     public CharacterController2D controller;
 
+    public Animator animator;
+
     private float horizontalMove = 0f;
 
     private bool jump = false;
@@ -57,7 +59,8 @@ public class PlayerMovement : MonoBehaviour
             {
                 crouch = false;
             }
-        }    
+        }
+        animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
     }
 
     void FixedUpdate()

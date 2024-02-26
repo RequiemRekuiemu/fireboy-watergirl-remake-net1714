@@ -1,7 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class CharacterController2D : MonoBehaviour
 {
@@ -31,6 +34,13 @@ public class CharacterController2D : MonoBehaviour
 
     public BoolEvent OnCrouchEvent;
     private bool m_wasCrouching = false;
+
+    private GameObject player;
+
+    void Start()
+    {
+        player = gameObject;
+    }
 
     private void Awake()
     {
@@ -135,7 +145,6 @@ public class CharacterController2D : MonoBehaviour
         }
     }
 
-
     private void Flip()
     {
         // Switch the way the player is labelled as facing.
@@ -145,5 +154,23 @@ public class CharacterController2D : MonoBehaviour
         Vector3 theScale = transform.localScale;
         theScale.x *= -1;
         transform.localScale = theScale;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (string.Equals(player.name, "Player1", StringComparison.OrdinalIgnoreCase))
+        {
+            if (collision.gameObject.tag == "Water")
+            {
+                SceneManager.LoadScene("Level01");
+            }
+        }
+        if (string.Equals(player.name, "Player2", StringComparison.OrdinalIgnoreCase))
+        {
+            if (collision.gameObject.tag == "Lava")
+            {
+                SceneManager.LoadScene("Level01");
+            }
+        }
     }
 }
