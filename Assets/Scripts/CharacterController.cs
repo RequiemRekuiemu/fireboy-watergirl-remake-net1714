@@ -140,7 +140,7 @@ public class CharacterController2D : MonoBehaviour
         if (m_Grounded && jump)
         {
             // Add a vertical force to the player.
-            m_Grounded = false;
+            m_Grounded = true;
             m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
         }
     }
@@ -162,15 +162,19 @@ public class CharacterController2D : MonoBehaviour
         {
             if (collision.gameObject.tag == "Water")
             {
-                SceneManager.LoadScene("Level01");
+                GameManager.Instance.RestartLevel();
             }
         }
         if (string.Equals(player.name, "Player2", StringComparison.OrdinalIgnoreCase))
         {
             if (collision.gameObject.tag == "Lava")
             {
-                SceneManager.LoadScene("Level01");
+                GameManager.Instance.RestartLevel();
             }
+        }
+        if (collision.gameObject.tag == "Trap")
+        {
+            GameManager.Instance.RestartLevel();
         }
     }
 }

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Lava
   - Water
+  - Trap
   layers:
   - Default
   - TransparentFX
@@ -40,6 +41,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 355839401
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Top
+    uniqueID: 2986523915
     locked: 0

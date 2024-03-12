@@ -34,6 +34,7 @@ public class PlayerMovement : MonoBehaviour
             if (Input.GetButtonDown("Player1_Jump"))
             {
                 jump = true;
+                animator.SetBool("IsJumping", true);
             }
             if (Input.GetButtonDown("Player1_Crouch"))
             {
@@ -50,6 +51,7 @@ public class PlayerMovement : MonoBehaviour
             if (Input.GetButtonDown("Player2_Jump"))
             {
                 jump = true;
+                animator.SetBool("IsJumping", true);
             }
             if (Input.GetButtonDown("Player2_Crouch"))
             {
@@ -61,6 +63,11 @@ public class PlayerMovement : MonoBehaviour
             }
         }
         animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
+    }
+
+    public void OnLanding()
+    {
+        animator.SetBool("IsJumping", false);
     }
 
     void FixedUpdate()
