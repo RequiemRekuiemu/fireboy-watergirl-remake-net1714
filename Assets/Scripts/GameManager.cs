@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -33,12 +34,21 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void RestartLevel()
+    public void RestartLevel(string name)
     {
         if (isReloading)
             return;
 
-        Debug.Log("It wasn't meant to be.");
+        if (string.Equals(name, "Player1", StringComparison.OrdinalIgnoreCase))
+        {
+            Debug.Log("You are extinguished");
+        }
+        if (string.Equals(name, "Player2", StringComparison.OrdinalIgnoreCase))
+        {
+            Debug.Log("You are vaporized");
+        }
+
+        Debug.Log("One more time...");
         StartCoroutine(ReloadLevel());
     }
 
@@ -67,7 +77,7 @@ public class GameManager : MonoBehaviour
             return;
 
         levelComplete = true;
-        Debug.Log("Love found a way!");
+        Debug.Log("You won!");
 
         StartCoroutine(LoadNextLevel());
     }

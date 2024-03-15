@@ -162,19 +162,19 @@ public class CharacterController2D : MonoBehaviour
         {
             if (collision.gameObject.tag == "Water")
             {
-                GameManager.Instance.RestartLevel();
+                GameManager.Instance.RestartLevel(player.name);
             }
         }
         if (string.Equals(player.name, "Player2", StringComparison.OrdinalIgnoreCase))
         {
             if (collision.gameObject.tag == "Lava")
             {
-                GameManager.Instance.RestartLevel();
+                GameManager.Instance.RestartLevel(player.name);
             }
         }
         if (collision.gameObject.tag == "Trap")
         {
-            GameManager.Instance.RestartLevel();
+            GameManager.Instance.RestartLevel(player.name);
         }
     }
 }
