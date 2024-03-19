@@ -7,6 +7,8 @@ TagManager:
   - Lava
   - Water
   - Trap
+  - Ignis
+  - Aqua
   layers:
   - Default
   - TransparentFX
