@@ -8,21 +8,22 @@ public class Player : NetworkBehaviour
     [SerializeField] private GameObject playerIgnis;
     [SerializeField] private GameObject playerAqua;
 
-    private Transform playerTransform;
+    private Transform spawnPointIgnis;
+    private Transform spawnPointAqua;
 
     // Start is called before the first frame update
     void Start()
     {
-        playerTransform = this.transform;
-        GameObject temp;
+        spawnPointIgnis = GameObject.FindGameObjectWithTag("SpawnPointIgnis").GetComponent<Transform>();
+        spawnPointAqua = GameObject.FindGameObjectWithTag("SpawnPointAqua").GetComponent<Transform>();
 
         if (IsOwner)
         {
-            Instantiate(playerIgnis);
+            Instantiate(playerIgnis, spawnPointIgnis);
         }
         else if (IsClient)
         {
-            Instantiate(playerAqua);
+            Instantiate(playerAqua, spawnPointAqua);
         }
         GameObject.Destroy(this.gameObject);
     }

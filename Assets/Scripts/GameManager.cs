@@ -13,6 +13,12 @@ public class GameManager : MonoBehaviour
     public bool levelComplete = false;
     public bool isReloading = false;
 
+    [SerializeField] private GameObject playerIgnis;
+    [SerializeField] private GameObject playerAqua;
+
+    private Transform spawnPointIgnis;
+    private Transform spawnPointAqua;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -39,11 +45,11 @@ public class GameManager : MonoBehaviour
         if (isReloading)
             return;
 
-        if (string.Equals(name, "Player1", StringComparison.OrdinalIgnoreCase))
+        if (string.Equals(tag, "Ignis", StringComparison.OrdinalIgnoreCase))
         {
             Debug.Log("You are extinguished");
         }
-        if (string.Equals(name, "Player2", StringComparison.OrdinalIgnoreCase))
+        if (string.Equals(tag, "Aqua", StringComparison.OrdinalIgnoreCase))
         {
             Debug.Log("You are vaporized");
         }
@@ -56,6 +62,17 @@ public class GameManager : MonoBehaviour
     {
         isReloading = true;
 
+        Transform ignis = GameObject.FindGameObjectWithTag("Ignis").GetComponent<Transform>();
+        if (ignis != null)
+        {
+            GameObject.Destroy(ignis.gameObject);
+        }
+        Transform aqua = GameObject.FindGameObjectWithTag("Aqua").GetComponent<Transform>();
+        if (aqua != null)
+        {
+            GameObject.Destroy(aqua.gameObject);
+        }
+
         AsyncOperation unload = SceneManager.UnloadSceneAsync(currentLevel);
 
         while (!unload.isDone)
@@ -67,6 +84,8 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(currentLevel, LoadSceneMode.Additive);
 
         //Fader.instance.FadeIn();
+        Instantiate(playerIgnis, spawnPointIgnis);
+        Instantiate(playerAqua, spawnPointAqua);
 
         isReloading = false;
     }

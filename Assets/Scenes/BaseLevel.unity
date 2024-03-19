@@ -4718,6 +4718,8 @@ MonoBehaviour:
   endLevel: 12
   levelComplete: 0
   isReloading: 0
+  playerIgnis: {fileID: 4872292291939493238, guid: 53b012a32c07b3a499ac443b7b1d3d6a, type: 3}
+  playerAqua: {fileID: 3787618185666704107, guid: b258a40ae687a3c4bab80f172eb557d2, type: 3}
 --- !u!4 &601478020
 Transform:
   m_ObjectHideFlags: 0

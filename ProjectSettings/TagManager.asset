@@ -9,6 +9,8 @@ TagManager:
   - Trap
   - Ignis
   - Aqua
+  - SpawnPointIgnis
+  - SpawnPointAqua
   layers:
   - Default
   - TransparentFX
