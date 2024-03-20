@@ -14,9 +14,6 @@ public class Player : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        spawnPointIgnis = GameObject.FindGameObjectWithTag("SpawnPointIgnis").GetComponent<Transform>();
-        spawnPointAqua = GameObject.FindGameObjectWithTag("SpawnPointAqua").GetComponent<Transform>();
-
         if (IsOwner)
         {
             Instantiate(playerIgnis, spawnPointIgnis);

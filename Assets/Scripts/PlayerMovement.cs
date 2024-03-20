@@ -1,3 +1,4 @@
+using Cinemachine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -20,6 +21,8 @@ public class PlayerMovement : NetworkBehaviour
     private bool crouch = false;
 
     private GameObject player;
+
+    [SerializeField] private CinemachineVirtualCamera cam;
 
     private NetworkVariable<CustomData> randomNumber = new NetworkVariable<CustomData>(new CustomData
     {
@@ -56,13 +59,11 @@ public class PlayerMovement : NetworkBehaviour
     void Start()
     {
         player = gameObject;
-        if (player.tag == "Ignis")
+        player.transform.position = GameObject.FindGameObjectWithTag("Spawnpoint").GetComponent<Transform>().position;
+        if (IsLocalPlayer)
         {
-            NetworkObject.SpawnAsPlayerObject(0);
-        }
-        else if (player.tag == "Aqua")
-        {
-            NetworkObject.SpawnAsPlayerObject(1);
+            cam = CinemachineVirtualCamera.FindObjectOfType<CinemachineVirtualCamera>();
+            cam.m_Follow = player.transform;
         }
     }
 
@@ -85,7 +86,7 @@ public class PlayerMovement : NetworkBehaviour
             };*/
         }
 
-        if (string.Equals(player.name, "Player1", StringComparison.OrdinalIgnoreCase))
+            if (string.Equals(player.name, "Player1", StringComparison.OrdinalIgnoreCase))
         {
             horizontalMove = Input.GetAxisRaw("Player1_Horizontal") * playerSpeed;
             if (Input.GetButtonDown("Player1_Jump"))

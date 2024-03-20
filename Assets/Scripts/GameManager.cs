@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private GameObject playerIgnis;
     [SerializeField] private GameObject playerAqua;
+    [SerializeField] private GameObject victoryUI;
 
     private Transform spawnPointIgnis;
     private Transform spawnPointAqua;
@@ -24,7 +25,7 @@ public class GameManager : MonoBehaviour
     {
         if (SceneManager.sceneCount < 2)
         {
-            SceneManager.LoadScene(currentLevel, LoadSceneMode.Additive);
+            SceneManager.LoadScene(currentLevel + 1, LoadSceneMode.Additive);
         }
     }
 
@@ -37,7 +38,14 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        EndGame eg1 = GameObject.FindGameObjectWithTag("EndGameIgnis").GetComponent<EndGame>();
+        EndGame eg2 = GameObject.FindGameObjectWithTag("EndGameAqua").GetComponent<EndGame>();
+        bool con1 = eg1.ReturnCondition();
+        bool con2 = eg2.ReturnCondition();
+        if (con1 && con2)
+        {
+            CompleteLevel();
+        }
     }
 
     public void RestartLevel(string name)
@@ -55,23 +63,16 @@ public class GameManager : MonoBehaviour
         }
 
         Debug.Log("One more time...");
-        StartCoroutine(ReloadLevel());
+        foreach (GameObject player in GameObject.FindGameObjectsWithTag("Ignis"))
+        {
+            player.transform.position = GameObject.FindGameObjectWithTag("Spawnpoint").GetComponent<Transform>().position;
+        }
+        /*StartCoroutine(ReloadLevel());*/
     }
 
     IEnumerator ReloadLevel()
     {
         isReloading = true;
-
-        Transform ignis = GameObject.FindGameObjectWithTag("Ignis").GetComponent<Transform>();
-        if (ignis != null)
-        {
-            GameObject.Destroy(ignis.gameObject);
-        }
-        Transform aqua = GameObject.FindGameObjectWithTag("Aqua").GetComponent<Transform>();
-        if (aqua != null)
-        {
-            GameObject.Destroy(aqua.gameObject);
-        }
 
         AsyncOperation unload = SceneManager.UnloadSceneAsync(currentLevel);
 
@@ -82,10 +83,7 @@ public class GameManager : MonoBehaviour
 
         Debug.Log("Scene loaded");
         SceneManager.LoadScene(currentLevel, LoadSceneMode.Additive);
-
         //Fader.instance.FadeIn();
-        Instantiate(playerIgnis, spawnPointIgnis);
-        Instantiate(playerAqua, spawnPointAqua);
 
         isReloading = false;
     }
@@ -97,8 +95,10 @@ public class GameManager : MonoBehaviour
 
         levelComplete = true;
         Debug.Log("You won!");
-
-        StartCoroutine(LoadNextLevel());
+        Time.timeScale = 0f;
+        FindObjectOfType<AudioManager>().Play("Victory");
+        victoryUI.SetActive(true);
+        /*StartCoroutine(LoadNextLevel());*/
     }
 
     IEnumerator LoadNextLevel()
