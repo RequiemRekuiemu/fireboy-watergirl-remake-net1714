@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
 
         if (string.Equals(tag, "Ignis", StringComparison.OrdinalIgnoreCase))
         {
-            Debug.Log("You are extinguished");
+             Debug.Log("You are extinguished");
         }
         if (string.Equals(tag, "Aqua", StringComparison.OrdinalIgnoreCase))
         {
@@ -64,6 +64,10 @@ public class GameManager : MonoBehaviour
 
         Debug.Log("One more time...");
         foreach (GameObject player in GameObject.FindGameObjectsWithTag("Ignis"))
+        {
+            player.transform.position = GameObject.FindGameObjectWithTag("Spawnpoint").GetComponent<Transform>().position;
+        }
+        foreach (GameObject player in GameObject.FindGameObjectsWithTag("Aqua"))
         {
             player.transform.position = GameObject.FindGameObjectWithTag("Spawnpoint").GetComponent<Transform>().position;
         }
