@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.SearchService;
+/*using UnityEditor.SearchService;*/
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -158,14 +158,14 @@ public class CharacterController2D : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (string.Equals(player.name, "Player1", StringComparison.OrdinalIgnoreCase))
+        if (string.Equals(player.tag, "Ignis", StringComparison.OrdinalIgnoreCase))
         {
             if (collision.gameObject.tag == "Water")
             {
                 GameManager.Instance.RestartLevel(player.name);
             }
         }
-        if (string.Equals(player.name, "Player2", StringComparison.OrdinalIgnoreCase))
+        if (string.Equals(player.tag, "Aqua", StringComparison.OrdinalIgnoreCase))
         {
             if (collision.gameObject.tag == "Lava")
             {

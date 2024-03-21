@@ -10,6 +10,8 @@ public class AudioManager : MonoBehaviour
 
     public static AudioManager instance;
 
+    [SerializeField] private AudioMixerGroup audioMixer;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -52,17 +54,18 @@ public class AudioManager : MonoBehaviour
         {
             Debug.Log("No sound file found!");
         }
+        s.source.outputAudioMixerGroup = audioMixer;
         s.source.Play();
     }
 
     public void IncreaseVolumeGradually(string name)
     {
-        Sound s = Array.Find(sounds, x => x.name == name);
+        /*Sound s = Array.Find(sounds, x => x.name == name);
         if (s == null)
         {
             Debug.Log("No sound file found!");
         }
-        s.source.volume += 0.1f;
+        s.source.volume += 0.1f;*/
     }
 
     public void ResetVolume(string name)

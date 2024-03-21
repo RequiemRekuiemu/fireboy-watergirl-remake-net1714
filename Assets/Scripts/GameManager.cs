@@ -13,12 +13,19 @@ public class GameManager : MonoBehaviour
     public bool levelComplete = false;
     public bool isReloading = false;
 
+    [SerializeField] private GameObject playerIgnis;
+    [SerializeField] private GameObject playerAqua;
+    [SerializeField] private GameObject victoryUI;
+
+    private Transform spawnPointIgnis;
+    private Transform spawnPointAqua;
+
     // Start is called before the first frame update
     void Start()
     {
         if (SceneManager.sceneCount < 2)
         {
-            SceneManager.LoadScene(currentLevel, LoadSceneMode.Additive);
+            SceneManager.LoadScene(currentLevel + 1, LoadSceneMode.Additive);
         }
     }
 
@@ -31,7 +38,14 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        EndGame eg1 = GameObject.FindGameObjectWithTag("EndGameIgnis").GetComponent<EndGame>();
+        EndGame eg2 = GameObject.FindGameObjectWithTag("EndGameAqua").GetComponent<EndGame>();
+        bool con1 = eg1.ReturnCondition();
+        bool con2 = eg2.ReturnCondition();
+        if (con1 && con2)
+        {
+            CompleteLevel();
+        }
     }
 
     public void RestartLevel(string name)
@@ -39,17 +53,25 @@ public class GameManager : MonoBehaviour
         if (isReloading)
             return;
 
-        if (string.Equals(name, "Player1", StringComparison.OrdinalIgnoreCase))
+        if (string.Equals(tag, "Ignis", StringComparison.OrdinalIgnoreCase))
         {
-            Debug.Log("You are extinguished");
+             Debug.Log("You are extinguished");
         }
-        if (string.Equals(name, "Player2", StringComparison.OrdinalIgnoreCase))
+        if (string.Equals(tag, "Aqua", StringComparison.OrdinalIgnoreCase))
         {
             Debug.Log("You are vaporized");
         }
 
         Debug.Log("One more time...");
-        StartCoroutine(ReloadLevel());
+        foreach (GameObject player in GameObject.FindGameObjectsWithTag("Ignis"))
+        {
+            player.transform.position = GameObject.FindGameObjectWithTag("Spawnpoint").GetComponent<Transform>().position;
+        }
+        foreach (GameObject player in GameObject.FindGameObjectsWithTag("Aqua"))
+        {
+            player.transform.position = GameObject.FindGameObjectWithTag("Spawnpoint").GetComponent<Transform>().position;
+        }
+        /*StartCoroutine(ReloadLevel());*/
     }
 
     IEnumerator ReloadLevel()
@@ -65,7 +87,6 @@ public class GameManager : MonoBehaviour
 
         Debug.Log("Scene loaded");
         SceneManager.LoadScene(currentLevel, LoadSceneMode.Additive);
-
         //Fader.instance.FadeIn();
 
         isReloading = false;
@@ -78,8 +99,10 @@ public class GameManager : MonoBehaviour
 
         levelComplete = true;
         Debug.Log("You won!");
-
-        StartCoroutine(LoadNextLevel());
+        Time.timeScale = 0f;
+        FindObjectOfType<AudioManager>().Play("Victory");
+        victoryUI.SetActive(true);
+        /*StartCoroutine(LoadNextLevel());*/
     }
 
     IEnumerator LoadNextLevel()

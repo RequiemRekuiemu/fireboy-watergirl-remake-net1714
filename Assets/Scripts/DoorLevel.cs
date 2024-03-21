@@ -52,13 +52,13 @@ public class DoorLevel : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!Player1IsInside
-            && string.Equals(collision.name, "Player1", StringComparison.OrdinalIgnoreCase))
+            && string.Equals(collision.tag, "Ignis", StringComparison.OrdinalIgnoreCase))
         {
             Debug.Log("1 entered!");
             Player1IsInside = true;
         }
         if (!Player2IsInside
-            && string.Equals(collision.name, "Player2", StringComparison.OrdinalIgnoreCase))
+            && string.Equals(collision.tag, "Aqua", StringComparison.OrdinalIgnoreCase))
         {
             Debug.Log("2 entered!");
             Player2IsInside = true;
@@ -68,12 +68,12 @@ public class DoorLevel : MonoBehaviour
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (Player1IsInside
-            && string.Equals(collision.name, "Player1", StringComparison.OrdinalIgnoreCase))
+            && string.Equals(collision.tag, "Ignis", StringComparison.OrdinalIgnoreCase))
         {
             Debug.Log("1 is inside!");
         }
         if (Player2IsInside
-            && string.Equals(collision.name, "Player2", StringComparison.OrdinalIgnoreCase))
+            && string.Equals(collision.tag, "Aqua", StringComparison.OrdinalIgnoreCase))
         {
             Debug.Log("2 is inside!");
         }
@@ -82,13 +82,13 @@ public class DoorLevel : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (Player1IsInside
-            && string.Equals(collision.name, "Player1", StringComparison.OrdinalIgnoreCase))
+            && string.Equals(collision.tag, "Ignis", StringComparison.OrdinalIgnoreCase))
         {
             Debug.Log("1 is outside!");
             Player1IsInside = false;
         }
         if (Player2IsInside
-            && string.Equals(collision.name, "Player2", StringComparison.OrdinalIgnoreCase))
+            && string.Equals(collision.tag, "Aqua", StringComparison.OrdinalIgnoreCase))
         {
             Debug.Log("2 is outside!");
             Player2IsInside = false;
